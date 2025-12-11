@@ -1,5 +1,5 @@
 {
-  "family": "docinsight-studio-td-4",
+  "family": "docinsight-studio-td-5",
   "networkMode": "awsvpc",
   "executionRoleArn": "arn:aws:iam::839685189558:role/ecsTaskExecutionRole",
   "requiresCompatibilities": ["FARGATE"],
@@ -7,8 +7,8 @@
   "memory": "8192",
   "containerDefinitions": [
     {
-      "name": "docinsight-studio-container-4",
-      "image": "839685189558.dkr.ecr.ap-southeast-2.amazonaws.com/docinsight-studio-ecr-repository-4",
+      "name": "docinsight-studio-container-5",
+      "image": "839685189558.dkr.ecr.ap-southeast-2.amazonaws.com/docinsight-studio-ecr-repository-5",
       "cpu": 1024,
       "essential": true,
       "portMappings": [
@@ -16,7 +16,7 @@
           "containerPort": 8080,
           "hostPort": 8080,
           "protocol": "tcp",
-          "name": "docinsight-studio-container-2-8080-tcp",
+          "name": "docinsight-studio-container-5-8080-tcp",
           "appProtocol": "http"
         }
       ],
@@ -28,43 +28,14 @@
       ],
       "secrets": [
         {
-            "name": "GROQ_API_KEY",
-            "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:839685189558:secret:GROQ_API_KEY"
-        },
-        {
-            "name": "GOOGLE_API_KEY",
-            "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:839685189558:secret:GOOGLE_API_KEY"
-        },
-        {
-            "name": "HF_TOKEN",
-            "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:839685189558:secret:HF_TOKEN"
-        },
-        {
-            "name": "LLM_PROVIDER",
-            "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:839685189558:secret:LLM_PROVIDER"
-        },
-        {
-            "name": "LANGCHAIN_API_KEY",
-            "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:839685189558:secret:LANGCHAIN_API_KEY"
-        },
-        {
-            "name": "LANGCHAIN_TRACING_V2",
-            "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:839685189558:secret:LANGCHAIN_TRACING_V2"
-        },
-        {
-            "name": "LANGCHAIN_ENDPOINT",
-            "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:839685189558:secret:LANGCHAIN_ENDPOINT"
-        },
-        {
-            "name": "LANGCHAIN_PROJECT",
-            "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:839685189558:secret:LANGCHAIN_PROJECT"
+          "name": "DOCINSIGHT_SECRET_JSON",
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:839685189558:secret:docinsight_studio_secrets"
         }
-
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/docinsight-studio-td-4",
+          "awslogs-group": "/ecs/docinsight-studio-td-5",
           "awslogs-region": "ap-southeast-2",
           "awslogs-stream-prefix": "ecs",
           "awslogs-create-group": "true"

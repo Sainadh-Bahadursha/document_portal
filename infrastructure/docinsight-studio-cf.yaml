@@ -25,7 +25,7 @@ Resources:
   MyECRRepository:
     Type: AWS::ECR::Repository
     Properties:
-      RepositoryName: docinsight-studio-ecr-repository-4
+      RepositoryName: docinsight-studio-ecr-repository-5
       ImageScanningConfiguration:
         ScanOnPush: true
       ImageTagMutability: MUTABLE
@@ -147,7 +147,7 @@ Resources:
   ECSTaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: docinsight-studio-td-4
+      Family: docinsight-studio-td-5
       Cpu: "1024"
       Memory: "8192"
       NetworkMode: awsvpc

@@ -1,4 +1,5 @@
 import os
+import json
 import sys
 from dotenv import load_dotenv
 from utils.config_loader import load_config
@@ -6,10 +7,11 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGener
 from langchain_groq import ChatGroq
 from logger import GLOBAL_LOGGER as log
 from exception.custom_exception import DocInsightStudioException
+from dotenv import load_dotenv
 
 
 class ApiKeyManager:
-    # All secrets that your ECS container will inject individually
+
     REQUIRED_KEYS = [
         "GROQ_API_KEY",
         "GOOGLE_API_KEY",
@@ -24,14 +26,27 @@ class ApiKeyManager:
     def __init__(self):
         self.api_keys = {}
 
-        # Load from environment variables (in ECS, secrets are injected as env vars)
+        # 📌 Load JSON secret if present
+        secret_json = os.getenv("DOCINSIGHT_SECRET_JSON")
+
+        if secret_json:
+            try:
+                parsed = json.loads(secret_json)
+                self.api_keys.update(parsed)
+                log.info("Loaded secrets from DOCINSIGHT_SECRET_JSON")
+            except Exception as e:
+                log.error("Failed to parse DOCINSIGHT_SECRET_JSON", error=str(e))
+                raise DocInsightStudioException("Invalid JSON secret format", sys)
+
+        # 📌 Allow override from individual environment variables (local dev)
         for key in self.REQUIRED_KEYS:
-            value = os.getenv(key)
-            if value:
-                self.api_keys[key] = value
-                log.info(f"Loaded {key} from environment variable")
-            else:
-                log.warning(f"{key} not found in environment variables")
+            if key not in self.api_keys:
+                env_val = os.getenv(key)
+                if env_val:
+                    self.api_keys[key] = env_val
+                    log.info(f"Loaded {key} from environment variable")
+                else:
+                    log.warning(f"{key} not found in environment variables")
 
         # Final check for missing keys
         missing = [k for k in self.REQUIRED_KEYS if k not in self.api_keys]
@@ -48,7 +63,7 @@ class ApiKeyManager:
         )
 
     def get(self, key: str) -> str:
-        val = self.api_keys.get(key)
+        val = self.api_keys[key]
         if not val:
             raise KeyError(f"API key for {key} is missing")
         return val

@@ -6,11 +6,11 @@ on:
       - completed
 env:
   AWS_REGION: ap-southeast-2
-  ECR_REPOSITORY: docinsight-studio-ecr-repository-4
-  ECS_SERVICE: docinsight-studio-ecs-service-4
-  ECS_CLUSTER: docinsight-studio-ecs-cluster-4
+  ECR_REPOSITORY: docinsight-studio-ecr-repository-5
+  ECS_SERVICE: docinsight-studio-ecs-service-5
+  ECS_CLUSTER: docinsight-studio-ecs-cluster-5
   ECS_TASK_DEFINITION: .github/workflows/task_definition.json
-  CONTAINER_NAME: docinsight-studio-container-4
+  CONTAINER_NAME: docinsight-studio-container-5
 
 permissions:
   id-token: write

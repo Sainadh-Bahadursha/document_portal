@@ -47,7 +47,7 @@
             {
               "Effect": "Allow",
               "Action": "secretsmanager:GetSecretValue",
-              "Resource": "arn:aws:secretsmanager:ap-southeast-2:839685189558:secret:docinsight_studio_aws_secrets-vPmscf*"
+              "Resource": "arn:aws:secretsmanager:ap-southeast-2:839685189558:secret:docinsight_studio_secrets*"
             }
           ]
         }
